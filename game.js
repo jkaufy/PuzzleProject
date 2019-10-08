@@ -62,6 +62,7 @@ var topWall = new PIXI.Sprite(PIXI.Texture.from("top1.png"));
 var bottomWall = new PIXI.Sprite(PIXI.Texture.from("top.png"));
 var startSprite = new PIXI.Sprite(PIXI.Texture.from("play.png"));
 var backSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
+var endbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var insbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var creditSprite = new PIXI.Sprite(PIXI.Texture.from("Credits.png"));
 var insSprite = new PIXI.Sprite(PIXI.Texture.from("Instructions.png"));
@@ -70,6 +71,7 @@ var scoreText = new PIXI.Text('Score: ' + score ,{fontFamily : 'Arial', fontSize
 var startText = new PIXI.Text('GUIDE THE UFO HOME',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 var insText = new PIXI.Text('INTRUCTIONS',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 var insText2 = new PIXI.Text('Move with the mouse and do not hit the pipes',{fontFamily : 'Arial', fontSize: 15, align : 'center'});
+var endText = new PIXI.Text('Your Score: ' +score ,{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 
 
 // sets the position of the sprites
@@ -105,7 +107,6 @@ insText2.position.y = 200;
 insText2.position.x = 50;
 
 //back sprite button
-//endScreen.addChild(backSprite);
 instructionScreen.addChild(insbackSprite);
 instructionScreen.addChild(insText);
 instructionScreen.addChild(insText2);
@@ -122,6 +123,37 @@ function backButton(e)
     credit = false;
     end = false;
     instruction = false;
+    score = 0;
+    topWall.position.x = 400;
+    bottomWall.position.x = 400;
+    scoreText.text = 'Score: ' + score;
+}
+
+
+//end Screen
+endbackSprite.position.y = 325;
+endbackSprite.position.x = 150;
+
+endText.position.y = 100;
+endText.position.x = 100;
+
+endScreen.addChild(endbackSprite);
+endScreen.addChild(endText);
+
+
+endbackSprite.buttonMode = true;
+endbackSprite.interactive = true;
+endbackSprite.on('mousedown', backButton);
+
+startSprite.buttonMode = true;
+startSprite.interactive = true;
+startSprite.on('mousedown', playButton);
+
+
+function playButton(e)
+{
+    start = false;
+    game = true;
 }
 
 
@@ -299,6 +331,7 @@ function animate()
     {
         stage.removeChild(gameScreen);
         stage.addChild(endScreen);
+        endText.text = 'Your Score: ' + score;
     }
     else if(instruction)
     {
