@@ -8,6 +8,20 @@ gameport.appendChild(renderer.view);
 //create the stage
 var stage = new PIXI.Container();
 
+var startScreen = new PIXI.Container();
+var gameScreen = new PIXI.Container();
+var endScreen = new PIXI.Container();
+var creditScreen = new PIXI.Container();
+var instructionScreen = new PIXI.Container();
+
+var game = false;
+var end = false;
+var start = true;
+var instruction = false;
+var credit = false;
+
+
+
 // set global varaibles
 var speed = 5;
 var score = 0;
@@ -30,7 +44,7 @@ function ready()
     var frames = [];
     for(var index = 1; index <= 13; index++)
     {
-        frames.push(PIXI.Texture.fromFrame('ufo' + index + '.png'));
+        frames.push(PIXI.Texture.from('ufo' + index + '.png'));
     }
 
     ufo = new PIXI.AnimatedSprite(frames);
@@ -38,22 +52,25 @@ function ready()
     ufo.position.y = 200;
     ufo.animationSpeed = 0.3;
     ufo.play();
-    stage.addChild(ufo);
+    gameScreen.addChild(ufo);
 
 }
 
-/*loader
-    .add("ping.mp3")
-    .load(sound);
-
-function sound()
-{
-    ping = new PIXI.audioManager.getAudio("ping.mp3");
-}*/
+//const sound = PIXI.sound.Sound.from('ping.mp3');
 
 var topWall = new PIXI.Sprite(PIXI.Texture.from("top1.png"));
 var bottomWall = new PIXI.Sprite(PIXI.Texture.from("top.png"));
+var startSprite = new PIXI.Sprite(PIXI.Texture.from("play.png"));
+var backSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
+var insbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
+var creditSprite = new PIXI.Sprite(PIXI.Texture.from("Credits.png"));
+var insSprite = new PIXI.Sprite(PIXI.Texture.from("Instructions.png"));
 var scoreText = new PIXI.Text('Score: ' + score ,{fontFamily : 'Arial', fontSize: 20, align : 'right'});
+
+var startText = new PIXI.Text('GUIDE THE UFO HOME',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
+var insText = new PIXI.Text('INTRUCTIONS',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
+var insText2 = new PIXI.Text('Move with the mouse and do not hit the pipes',{fontFamily : 'Arial', fontSize: 15, align : 'center'});
+
 
 // sets the position of the sprites
 topWall.position.x = 400;
@@ -61,14 +78,75 @@ topWall.position.y = -40;
 bottomWall.position.y = 400;
 bottomWall.position.x = 390;
 
+startScreen.addChild(startSprite);
+startScreen.addChild(insSprite);
+startScreen.addChild(creditSprite);
+
+
+insbackSprite.position.y = 325;
+insbackSprite.position.x = 150;
+
+startText.position.y = 125;
+startText.position.x = 25;
+
+creditSprite.position.y = 200;
+creditSprite.position.x = 250;
+
+startSprite.position.y = 200;
+startSprite.position.x = 50;
+
+insSprite.position.y = 200;
+insSprite.position.x = 150;
+
+insText.position.y = 100;
+insText.position.x = 100;
+
+insText2.position.y = 200;
+insText2.position.x = 50;
+
+//back sprite button
+//endScreen.addChild(backSprite);
+instructionScreen.addChild(insbackSprite);
+instructionScreen.addChild(insText);
+instructionScreen.addChild(insText2);
+//creditScreen.addChild(backSprite);
+
+insbackSprite.buttonMode = true;
+insbackSprite.interactive = true;
+
+insbackSprite.on('mousedown', backButton);
+
+function backButton(e)
+{
+    start = true;
+    credit = false;
+    end = false;
+    instruction = false;
+}
+
+
+insSprite.buttonMode = true;
+insSprite.interactive = true;
+
+insSprite.on('mousedown', instructionButton);
+
+
+function instructionButton(e)
+{
+    instruction = true;
+    start = false; 
+}
+
 
 //add all the sprites to the stage
-stage.addChild(topWall);
-stage.addChild(bottomWall);
-stage.addChild(scoreText);
+gameScreen.addChild(topWall);
+gameScreen.addChild(bottomWall);
+gameScreen.addChild(scoreText);
+
+startScreen.addChild(startText);
+
 
 //turns on the eventHandler for the mouse movement
-
 
 
 /*
@@ -102,6 +180,7 @@ function hitDetection(sp1, sp2)
             sp1Bounds.x  < sp2Bounds.x + sp2Bounds.width && sp1Bounds.y + 
             sp1Bounds.height > sp2Bounds.y && sp1Bounds.y < sp2Bounds.y + sp2Bounds.height;
 }
+
 
 
 /*
@@ -178,6 +257,8 @@ function moveWalls()
         score += 1;
         scoreText.text = 'Score: ' + score;
 
+        //PIXI.sound.play();
+
     }
 }
 
@@ -195,26 +276,42 @@ function animate()
     renderer.render(stage);
     moveWithMouse();
 
-    if(notTouchingWalls())
+
+    if (game)
     {
-        if (notHit)
+        stage.removeChild(startScreen);
+        stage.addChild(gameScreen);
+        if(notTouchingWalls())
         {
-            moveWalls();
-            ping.play();
-        }
+            if (notHit)
+            {
+                moveWalls();
+            }
         
+        }
+        else
+        {
+            game = false;
+            end = true;
+        }
     }
-    else
+    else if(end)
     {
-        notHit = false;
-        stage.removeChild(topWall);
-        stage.removeChild(bottomWall);
+        stage.removeChild(gameScreen);
+        stage.addChild(endScreen);
+    }
+    else if(instruction)
+    {
+        stage.removeChild(startScreen);
+        stage.addChild(instructionScreen);
+    }
+    else if(start)
+    {
+        stage.addChild(startScreen);
+        stage.removeChild(instructionScreen);
+        stage.removeChild(creditScreen);
+        stage.removeChild(endScreen);
 
-
-        scoreText.text = 'Game Over      \n\n\n Score: ' + 
-                                    score + '       \n\n\nRefresh To Restart';
-        scoreText.position.y = 100;
-        scoreText.position.x = 100;
     }
 
 }
