@@ -73,6 +73,8 @@ var startText = new PIXI.Text('GUIDE THE UFO HOME',{fontFamily : 'Arial', fontSi
 var insText = new PIXI.Text('INTRUCTIONS',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 var insText2 = new PIXI.Text('Move with the mouse and do not hit the pipes',{fontFamily : 'Arial', fontSize: 15, align : 'center'});
 var endText = new PIXI.Text('Your Score: ' +score ,{fontFamily : 'Arial', fontSize: 30, align : 'center'});
+var crdText = new PIXI.Text('Created by Jacob Kaufman' ,{fontFamily : 'Arial', fontSize: 30, align : 'center'});
+
 
 
 // sets the position of the sprites
@@ -100,6 +102,12 @@ function crdButton(e)
 crdbackSprite.position.y = 325;
 crdbackSprite.position.x = 150;
 creditScreen.addChild(crdbackSprite);
+creditScreen.addChild(crdText);
+
+
+crdText.position.y = 150;
+crdText.position.x = 15;
+
 crdbackSprite.buttonMode = true;
 crdbackSprite.interactive = true;
 crdbackSprite.on('mousedown', backButton);
