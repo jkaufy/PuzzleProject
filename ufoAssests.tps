@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>json</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>ufoAssests.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>ufoAssests.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,7 +181,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Project 1/ufo.png</key>
             <key type="filename">../Project 1/ufo1.png</key>
             <key type="filename">../Project 1/ufo10.png</key>
             <key type="filename">../Project 1/ufo11.png</key>
@@ -210,7 +209,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Project 1/ufo.png</filename>
             <filename>../Project 1/ufo1.png</filename>
             <filename>../Project 1/ufo2.png</filename>
             <filename>../Project 1/ufo3.png</filename>
@@ -230,7 +228,9 @@
         <key>replaceList</key>
         <array/>
         <key>ignoredWarnings</key>
-        <array/>
+        <array>
+            <string>try-pro-features</string>
+        </array>
         <key>commonDivisorX</key>
         <uint>1</uint>
         <key>commonDivisorY</key>
