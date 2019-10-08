@@ -30,6 +30,17 @@ var notHit = true;
 var ufo;
 var ping;
 
+// background song
+
+PIXI.sound.Sound.from
+(
+    {
+        url: 'Song.mp3',
+        autoPlay: true,
+        loop: true
+    }
+
+);
 
 //creates all the sprites that are going to end up on stage
 
