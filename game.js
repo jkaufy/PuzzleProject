@@ -59,7 +59,9 @@ function ready()
 
 //const sound = PIXI.sound.Sound.from('ping.mp3');
 
+// all the sprites
 var topWall = new PIXI.Sprite(PIXI.Texture.from("top1.png"));
+var background = new PIXI.Sprite(PIXI.Texture.from("background.png"));
 var bottomWall = new PIXI.Sprite(PIXI.Texture.from("top.png"));
 var startSprite = new PIXI.Sprite(PIXI.Texture.from("play.png"));
 var backSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
@@ -68,13 +70,26 @@ var insbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var crdbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var creditSprite = new PIXI.Sprite(PIXI.Texture.from("Credits.png"));
 var insSprite = new PIXI.Sprite(PIXI.Texture.from("Instructions.png"));
-var scoreText = new PIXI.Text('Score: ' + score ,{fontFamily : 'Arial', fontSize: 20, align : 'right'});
 
+// sprite texts
+var scoreText = new PIXI.Text('Score: ' + score ,{fontFamily : 'Arial', fontSize: 20, align : 'right'});
 var startText = new PIXI.Text('GUIDE THE UFO HOME',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 var insText = new PIXI.Text('INTRUCTIONS',{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 var insText2 = new PIXI.Text('Move with the mouse and do not hit the pipes',{fontFamily : 'Arial', fontSize: 15, align : 'center'});
 var endText = new PIXI.Text('Your Score: ' +score ,{fontFamily : 'Arial', fontSize: 30, align : 'center'});
 var crdText = new PIXI.Text('Created by Jacob Kaufman' ,{fontFamily : 'Arial', fontSize: 30, align : 'center'});
+
+
+// colors
+startText.style.fill = 0x00FF00;
+insText.style.fill = 0x00FF00;
+insText2.style.fill = 0x00FF00;
+endText.style.fill = 0x00FF00;
+crdText.style.fill = 0x00FF00;
+scoreText.style.fill = 0x00FF00;
+
+
+stage.addChild(background);
 
 
 
@@ -148,10 +163,10 @@ startSprite.position.x = 50;
 insSprite.position.y = 200;
 insSprite.position.x = 150;
 
-insText.position.y = 100;
+insText.position.y = 150;
 insText.position.x = 100;
 
-insText2.position.y = 200;
+insText2.position.y = 250;
 insText2.position.x = 50;
 
 //back sprite button
@@ -180,7 +195,7 @@ function backButton(e)
 endbackSprite.position.y = 325;
 endbackSprite.position.x = 150;
 
-endText.position.y = 100;
+endText.position.y = 200;
 endText.position.x = 100;
 
 endScreen.addChild(endbackSprite);
