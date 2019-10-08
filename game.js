@@ -5,15 +5,16 @@ var gameport = document.getElementById("gameport");
 var renderer = PIXI.autoDetectRenderer({width: 400, height: 400, backgroundColor: 0x3344ee});
 gameport.appendChild(renderer.view);
 
-//create the stage
+//create the screens
 var stage = new PIXI.Container();
-
 var startScreen = new PIXI.Container();
 var gameScreen = new PIXI.Container();
 var endScreen = new PIXI.Container();
 var creditScreen = new PIXI.Container();
 var instructionScreen = new PIXI.Container();
 
+
+// Which screen to show
 var game = false;
 var end = false;
 var start = true;
@@ -77,7 +78,7 @@ var crdText = new PIXI.Text('Created by Jacob Kaufman' ,{fontFamily : 'Arial', f
 
 
 
-// sets the position of the sprites
+// start and game screens
 topWall.position.x = 400;
 topWall.position.y = -40;
 bottomWall.position.y = 400;
@@ -87,6 +88,17 @@ startScreen.addChild(startSprite);
 startScreen.addChild(insSprite);
 startScreen.addChild(creditSprite);
 
+insSprite.buttonMode = true;
+insSprite.interactive = true;
+
+insSprite.on('mousedown', instructionButton);
+
+
+function instructionButton(e)
+{
+    instruction = true;
+    start = false; 
+}
 
 creditSprite.buttonMode = true;
 creditSprite.interactive = true;
@@ -98,7 +110,15 @@ function crdButton(e)
     start = false;
 }
 
+function playButton(e)
+{
+    start = false;
+    game = true;
+}
+
+
 // Credit Screen
+
 crdbackSprite.position.y = 325;
 crdbackSprite.position.x = 150;
 creditScreen.addChild(crdbackSprite);
@@ -112,7 +132,7 @@ crdbackSprite.buttonMode = true;
 crdbackSprite.interactive = true;
 crdbackSprite.on('mousedown', backButton);
 
-
+// instruction Screen
 insbackSprite.position.y = 325;
 insbackSprite.position.x = 150;
 
@@ -174,26 +194,6 @@ endbackSprite.on('mousedown', backButton);
 startSprite.buttonMode = true;
 startSprite.interactive = true;
 startSprite.on('mousedown', playButton);
-
-
-function playButton(e)
-{
-    start = false;
-    game = true;
-}
-
-
-insSprite.buttonMode = true;
-insSprite.interactive = true;
-
-insSprite.on('mousedown', instructionButton);
-
-
-function instructionButton(e)
-{
-    instruction = true;
-    start = false; 
-}
 
 
 //add all the sprites to the stage
