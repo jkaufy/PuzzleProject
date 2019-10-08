@@ -64,6 +64,7 @@ var startSprite = new PIXI.Sprite(PIXI.Texture.from("play.png"));
 var backSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var endbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var insbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
+var crdbackSprite = new PIXI.Sprite(PIXI.Texture.from("back.png"));
 var creditSprite = new PIXI.Sprite(PIXI.Texture.from("Credits.png"));
 var insSprite = new PIXI.Sprite(PIXI.Texture.from("Instructions.png"));
 var scoreText = new PIXI.Text('Score: ' + score ,{fontFamily : 'Arial', fontSize: 20, align : 'right'});
@@ -83,6 +84,25 @@ bottomWall.position.x = 390;
 startScreen.addChild(startSprite);
 startScreen.addChild(insSprite);
 startScreen.addChild(creditSprite);
+
+
+creditSprite.buttonMode = true;
+creditSprite.interactive = true;
+creditSprite.on('mousedown', crdButton);
+
+function crdButton(e)
+{
+    credit = true;
+    start = false;
+}
+
+// Credit Screen
+crdbackSprite.position.y = 325;
+crdbackSprite.position.x = 150;
+creditScreen.addChild(crdbackSprite);
+crdbackSprite.buttonMode = true;
+crdbackSprite.interactive = true;
+crdbackSprite.on('mousedown', backButton);
 
 
 insbackSprite.position.y = 325;
@@ -110,11 +130,9 @@ insText2.position.x = 50;
 instructionScreen.addChild(insbackSprite);
 instructionScreen.addChild(insText);
 instructionScreen.addChild(insText2);
-//creditScreen.addChild(backSprite);
 
 insbackSprite.buttonMode = true;
 insbackSprite.interactive = true;
-
 insbackSprite.on('mousedown', backButton);
 
 function backButton(e)
@@ -345,6 +363,11 @@ function animate()
         stage.removeChild(creditScreen);
         stage.removeChild(endScreen);
 
+    }
+    else if(credit)
+    {
+        stage.removeChild(startScreen);
+        stage.addChild(creditScreen);
     }
 
 }
